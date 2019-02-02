@@ -9,14 +9,18 @@ import android.support.v7.widget.Toolbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout;
+    private Button bttn_register;
+    private EditText editxt_username,editxt_password;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -50,7 +54,10 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
+    void a(){
 
+        Toast.makeText(this,"Please enter you username", Toast.LENGTH_SHORT).show();
+    }
     @Override
     public void onBackPressed() {
         if(drawerLayout.isDrawerOpen(GravityCompat.START)){
