@@ -26,7 +26,7 @@ public class StatusFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_staus, container, false);
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("Quiz");
+        databaseReference = FirebaseDatabase.getInstance().getReference("TeacherForm");
         editTextQuestion = (EditText) v.findViewById(R.id.editTextQuestion);
         editTextAnswer = (EditText) v.findViewById(R.id.editTextAnswer);
         buttonSave = (Button) v.findViewById(R.id.buttonSave);
@@ -41,24 +41,25 @@ public class StatusFragment extends Fragment {
     }
 
     private  void addQuestion(){
-        String question = editTextQuestion.getText().toString().trim();
-        String answer = editTextAnswer.getText().toString().trim();
-        if(TextUtils.isEmpty(question)){
-            Toast.makeText(getContext(),"Please enter your question", Toast.LENGTH_LONG).show();
+        String teacherName = editTextQuestion.getText().toString().trim();
+        String teacherPassword = editTextAnswer.getText().toString().trim();
+        if(TextUtils.isEmpty(teacherName)){
+            Toast.makeText(getContext(),"Please enter your teacher name", Toast.LENGTH_LONG).show();
             return;
         }
-        if(TextUtils.isEmpty(answer)){
-            Toast.makeText(getContext(),"Please enter your answer", Toast.LENGTH_LONG).show();
+        if(TextUtils.isEmpty(teacherPassword)){
+            Toast.makeText(getContext(),"Please enter your password", Toast.LENGTH_LONG).show();
             return;
         }
         String id ;
         try {
             id = databaseReference.push().getKey();
-            Quiz quiz = new Quiz(id,question,answer);
-            databaseReference.child(id).setValue(quiz);
+            teacherData teacherData = new teacherData(teacherName,teacherPassword);
+            databaseReference.child(teacherName).setValue(teacherData);
         }catch (Exception ex){
             Toast.makeText(getContext(),ex.getMessage(), Toast.LENGTH_LONG).show();
         }
-        Toast.makeText(getContext(),"Addede",Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(),"Saved",Toast.LENGTH_LONG).show();
     }
 }
+//
