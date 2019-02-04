@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".StudentLoginForm">
+    tools:context=".TeacherRegistration">
     <LinearLayout
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
@@ -13,27 +13,20 @@
         android:layout_height="wrap_content"
         android:layout_margin="15dp">
         <EditText
-            android:hint="Student username"
-            android:id="@+id/edittext_StudentUsername"
+            android:hint="Teacher username"
+            android:id="@+id/edittext_TeacherUsernameReg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <EditText
             android:inputType="textPassword"
             android:hint="Password"
-            android:id="@+id/edittext_StudentPassword"
+            android:id="@+id/edittext_TeacherPasswordReg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <Button
-            android:text="Login"
-            android:id="@+id/button_StudentLogin"
+            android:text="Register"
+            android:id="@+id/button_TeacherRegister"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/textview_studentSignup"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:text="Sign up"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
 </RelativeLayout>

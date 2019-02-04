@@ -51,9 +51,8 @@ public class StatusFragment extends Fragment {
             Toast.makeText(getContext(),"Please enter your password", Toast.LENGTH_LONG).show();
             return;
         }
-        String id ;
+
         try {
-            id = databaseReference.push().getKey();
             teacherData teacherData = new teacherData(teacherName,teacherPassword);
             databaseReference.child(teacherName).setValue(teacherData);
         }catch (Exception ex){

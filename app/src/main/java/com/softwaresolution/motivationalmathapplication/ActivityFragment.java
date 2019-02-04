@@ -89,7 +89,7 @@ public class ActivityFragment extends Fragment implements View.OnClickListener{
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(getContext(),"asdasdas",Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(),"Database error",Toast.LENGTH_LONG).show();
             }
         });
     }

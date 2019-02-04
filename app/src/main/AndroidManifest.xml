@@ -20,5 +20,7 @@
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".TeacherLoginForm"/>
         <activity android:name=".StudentLoginForm"/>
+        <activity android:name=".TeacherRegistration"/>
+        <activity android:name=".StudentRegistration"/>
     </application>
 </manifest>
