@@ -41,7 +41,7 @@ public class TeacherLoginForm extends AppCompatActivity {
         textView_teacherSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                showTeacherReg();
             }
         });
     }
@@ -71,7 +71,8 @@ public class TeacherLoginForm extends AppCompatActivity {
                 for (int i = 0;i < loginTeacherList.size();i++){
                     if(username.equals(loginTeacherList.get(i).teacherName)
                             && password.equals(loginTeacherList.get(i).teacherPassword)){
-                        Toast.makeText(getApplicationContext(),"Success",Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(getApplicationContext(), TeacherBottomNavigation.class);
+                        startActivity(intent);
                         return;
                     }
                 }

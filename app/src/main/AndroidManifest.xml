@@ -22,5 +22,6 @@
         <activity android:name=".StudentLoginForm"/>
         <activity android:name=".TeacherRegistration"/>
         <activity android:name=".StudentRegistration"/>
+        <activity android:name=".TeacherBottomNavigation"/>
     </application>
 </manifest>

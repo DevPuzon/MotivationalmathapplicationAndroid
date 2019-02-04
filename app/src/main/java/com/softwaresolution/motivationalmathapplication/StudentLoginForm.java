@@ -2,12 +2,25 @@ package com.softwaresolution.motivationalmathapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class StudentLoginForm extends AppCompatActivity {
     private EditText editText_StudentUsername, editText_StudentPassword;
@@ -34,9 +47,45 @@ public class StudentLoginForm extends AppCompatActivity {
             }
         });
     }
+    List<LoginStudent> loginStudents;
     private void  showMainActivity(){
-        Intent intent = new Intent(this,TeacherLoginForm.class);
-        startActivity(intent);
+        final String username = editText_StudentUsername.getText().toString().trim();
+        final String password = editText_StudentPassword.getText().toString().trim();
+        if(TextUtils.isEmpty(username)){
+            Toast.makeText(this,"Please enter you username", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if(TextUtils.isEmpty(password)){
+            Toast.makeText(this,"Please enter you password", Toast.LENGTH_LONG).show();
+            return;
+        }
+        loginStudents = new ArrayList<LoginStudent>();
+        final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = firebaseDatabase.getReference("StudentForm");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                loginStudents.clear();
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+                    LoginStudent loginStudent = dataSnapshot1.getValue(LoginStudent.class);
+                    loginStudents.add(loginStudent);
+                }
+                for (int i = 0;i < loginStudents.size();i++){
+                    if(username.equals(loginStudents.get(i).studentName)
+                            && password.equals(loginStudents.get(i).studentPassword)){
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(intent);
+                        return;
+                    }
+                }
+                Toast.makeText(getApplicationContext(),"Failed",Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(getApplicationContext(),"Database error",Toast.LENGTH_LONG).show();
+            }
+        });
     }
     private void showStudentReg(){
         Intent intent = new Intent(this,StudentRegistration.class);

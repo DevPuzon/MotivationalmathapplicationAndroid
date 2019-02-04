@@ -1,20 +1,20 @@
 package com.softwaresolution.motivationalmathapplication;
 
 public class studentData {
-    public  String studentUsername;
+    public  String studentName;
     public String studentPassword;
 
     public studentData(String studentUsername, String studentPassword) {
-        this.studentUsername = studentUsername;
+        this.studentName = studentUsername;
         this.studentPassword = studentPassword;
     }
 
     public String getStudentUsername() {
-        return studentUsername;
+        return studentName;
     }
 
     public void setStudentUsername(String studentUsername) {
-        this.studentUsername = studentUsername;
+        this.studentName = studentUsername;
     }
 
     public String getStudentPassword() {

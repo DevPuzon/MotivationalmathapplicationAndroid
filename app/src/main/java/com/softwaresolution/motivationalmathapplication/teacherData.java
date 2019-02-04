@@ -1,13 +1,8 @@
 package com.softwaresolution.motivationalmathapplication;
 
 public class teacherData {
-    public String teacherName;
-    public String teacherPassword;
-
-    public teacherData(String teacherName, String teacherPassword) {
-        this.teacherName = teacherName;
-        this.teacherPassword = teacherPassword;
-    }
+    String teacherName;
+    String teacherPassword;
 
     public String getTeacherName() {
         return teacherName;
@@ -24,4 +19,9 @@ public class teacherData {
     public void setTeacherPassword(String teacherPassword) {
         this.teacherPassword = teacherPassword;
     }
+    public teacherData(String teacherName, String teacherPassword) {
+        this.teacherName = teacherName;
+        this.teacherPassword = teacherPassword;
+    }
+
 }

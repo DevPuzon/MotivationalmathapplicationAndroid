@@ -16,7 +16,7 @@ public class TeacherRegistration extends AppCompatActivity {
     private Button button_TeacherRegister;
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.student_registration);
+        setContentView(R.layout.teacher_registration);
         editText_TeacherUsernameReg = (EditText) findViewById(R.id.edittext_TeacherUsernameReg);
         editText_TeacherPasswordReg = (EditText) findViewById(R.id.edittext_TeacherPasswordReg);
         button_TeacherRegister = (Button) findViewById(R.id.button_TeacherRegister);
