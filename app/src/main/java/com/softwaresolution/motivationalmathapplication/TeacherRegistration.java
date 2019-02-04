@@ -44,10 +44,10 @@ public class TeacherRegistration extends AppCompatActivity {
         try {
             teacherData teacherData = new teacherData(teacherName,teacherPassword);
             databaseReference.child(teacherName).setValue(teacherData);
+            Toast.makeText(this,"Saved",Toast.LENGTH_LONG).show();
         }catch (Exception ex){
             Toast.makeText(this,ex.getMessage(), Toast.LENGTH_LONG).show();
         }
-        Toast.makeText(this,"Saved",Toast.LENGTH_LONG).show();
     }
 }
 

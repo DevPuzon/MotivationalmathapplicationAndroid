@@ -71,6 +71,7 @@ public class TeacherLoginForm extends AppCompatActivity {
                 for (int i = 0;i < loginTeacherList.size();i++){
                     if(username.equals(loginTeacherList.get(i).teacherName)
                             && password.equals(loginTeacherList.get(i).teacherPassword)){
+                        TeacherGetSetData.teacherName =loginTeacherList.get(i).teacherName;
                         Intent intent = new Intent(getApplicationContext(), TeacherBottomNavigation.class);
                         startActivity(intent);
                         return;
