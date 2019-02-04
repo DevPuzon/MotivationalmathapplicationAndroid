@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,13 +35,7 @@ public class TeacherActivity extends Fragment implements View.OnClickListener{
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.teacher_activity, container, false);
-
-        databaseReference = FirebaseDatabase.getInstance().
-                getReference("TeacherForm")
-                .child(getTeacherName).child("Quiz").child("QuizNo");
-        databaseReferenceQuiz = FirebaseDatabase.getInstance().
-                getReference("TeacherForm")
-                .child(getTeacherName).child("Quiz");
+        GetQuizNumber();
         textView_quizno = (TextView) v.findViewById(R.id.textview_quizno);
         editText_question = (EditText) v.findViewById(R.id.edittxt_question);
         editText_a = (EditText) v.findViewById(R.id.edittxt_a);
@@ -50,6 +45,7 @@ public class TeacherActivity extends Fragment implements View.OnClickListener{
         editText_answer = (EditText) v.findViewById(R.id.edittxt_correct);
         button_next = (Button) v.findViewById(R.id.button_next);
         button_next.setOnClickListener(this);
+        textView_quizno.setText("Quiz No "+String.valueOf(retrieveNo));
         return  v;
     }
 
@@ -59,28 +55,43 @@ public class TeacherActivity extends Fragment implements View.OnClickListener{
             next();
         }
     }
-
     quizData qData;
-    List<GetQuiz> getQuizList;
-    private  void next(){
-        final String getquizNumber;
-        //GetQuizNumber
-        getQuizList = new ArrayList<GetQuiz>();
+    SetQuiz setQuiz;
+    private void GetQuizNumber(){
+        //GetQuizNumber]
+        databaseReferenceQuiz = FirebaseDatabase.getInstance().getReference("TeacherForm").child("qw").child("QuizNumber");
         databaseReferenceQuiz.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                getQuizList.clear();
-                GetQuiz getQuiz = dataSnapshot.getValue(GetQuiz.class);
-                getQuizList.add(getQuiz);
+                try{
+                    QuizNumber getQuiz = dataSnapshot.getValue(QuizNumber.class);
+                    retrieveNo = getQuiz.getQuizNumber();
+                }catch (Exception ex){
+                    Toast.makeText(getContext(),ex.getMessage(),Toast.LENGTH_LONG).show();
+                }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(getContext(),"Database error",Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(),"Error",Toast.LENGTH_LONG).show();
             }
         });
-        getquizNumber = getQuizList.get(0).quiz;
-
+    }
+    String retrieveNo;
+    private  void SetQuizNumber(String setNumber){
+        try{
+            setQuiz = new SetQuiz(setNumber);
+            databaseReferenceQuiz.setValue(setQuiz);
+            Toast.makeText(getContext(),"Saved",Toast.LENGTH_LONG).show();
+        }catch (Exception ex){
+            Toast.makeText(getContext(),ex.getMessage(),Toast.LENGTH_LONG).show();
+        }
+    }
+    private  void next(){
+        databaseReference = FirebaseDatabase.getInstance().
+                getReference("TeacherForm")
+                .child(getTeacherName).child("Quiz").child("Quiz No "+String.valueOf(retrieveNo));
+        String getNumber = TeacherGetSetData.getnumber.get(0);
         String question = editText_question.getText().toString().trim();
         String choice_a = editText_a.getText().toString().trim();
         String choice_b = editText_b.getText().toString().trim();
@@ -97,13 +108,23 @@ public class TeacherActivity extends Fragment implements View.OnClickListener{
 
 
         try{
+
             qData = new quizData(question,choice_a,
                     choice_b,choice_c,choice_d,correct_answer);
-            databaseReference.child(getquizNumber).setValue(qData);
+            databaseReference.child(getNumber).setValue(qData);
             Toast.makeText(getContext(),"Saved",Toast.LENGTH_LONG).show();
-
+            TeacherGetSetData.getnumber.remove(0);
+            if(Integer.parseInt(getNumber) == 3) {
+                //another Data
+                SetQuizNumber(String.valueOf(Integer.parseInt(retrieveNo) + 1));
+                TeacherGetSetData.getnumber.clear();
+                for (int ie = 1; ie <= 10; ++ie) {
+                    TeacherGetSetData.getnumber.add(String.valueOf(ie));
+                }
+            }
         }catch (Exception ex){
             Toast.makeText(getContext(),ex.getMessage(),Toast.LENGTH_LONG).show();
         }
+
     }
 }

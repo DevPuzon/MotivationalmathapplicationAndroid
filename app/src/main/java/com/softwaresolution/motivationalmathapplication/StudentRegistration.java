@@ -45,7 +45,7 @@ public class StudentRegistration extends AppCompatActivity {
         }
 
         try {
-            studentData studentData = new studentData(studentName,studentPassword);
+            LoginStudent studentData = new LoginStudent(studentName,studentPassword);
             databaseReference.child(studentName).setValue(studentData);
             Toast.makeText(this,"Saved",Toast.LENGTH_LONG).show();
         }catch (Exception ex){

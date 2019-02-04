@@ -1,9 +1,12 @@
 package com.softwaresolution.motivationalmathapplication;
 
-public class SetQuiz{
+public class QuizNumber {
     String quizNumber;
 
-    public SetQuiz(String quizNumber) {
+    public QuizNumber(){
+
+    }
+    public  QuizNumber(String quizNumber){
         this.quizNumber = quizNumber;
     }
 

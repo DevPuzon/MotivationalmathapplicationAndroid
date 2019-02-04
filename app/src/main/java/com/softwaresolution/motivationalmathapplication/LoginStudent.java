@@ -4,6 +4,15 @@ public class LoginStudent {
     String studentName;
     String studentPassword;
 
+    public LoginStudent(){
+
+    }
+
+    public LoginStudent(String studentName, String studentPassword) {
+        this.studentName = studentName;
+        this.studentPassword = studentPassword;
+    }
+
     public String getStudentName() {
         return studentName;
     }

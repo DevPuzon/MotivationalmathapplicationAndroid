@@ -42,11 +42,23 @@ public class TeacherRegistration extends AppCompatActivity {
         }
 
         try {
-            teacherData teacherData = new teacherData(teacherName,teacherPassword);
+            LoginTeacher teacherData = new LoginTeacher(teacherName,teacherPassword);
             databaseReference.child(teacherName).setValue(teacherData);
             Toast.makeText(this,"Saved",Toast.LENGTH_LONG).show();
         }catch (Exception ex){
             Toast.makeText(this,ex.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+    private  void SetQuizNumber(String setNumber){
+
+        DatabaseReference databaseReferenceQuiz = FirebaseDatabase.getInstance().getReference("TeacherForm")
+                .child(editText_TeacherUsernameReg.getText().toString().trim()).child("QuizNumber");
+        try{
+            SetQuiz setQuiz = new SetQuiz("1");
+            databaseReferenceQuiz.child("QuizNumber").setValue(setQuiz);
+            Toast.makeText(this,"Saved",Toast.LENGTH_LONG).show();
+        }catch (Exception ex){
+            Toast.makeText(this,ex.getMessage(),Toast.LENGTH_LONG).show();
         }
     }
 }

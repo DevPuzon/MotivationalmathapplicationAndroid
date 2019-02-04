@@ -57,6 +57,8 @@ public class TeacherLoginForm extends AppCompatActivity {
             Toast.makeText(this,"Please enter you password", Toast.LENGTH_LONG).show();
             return;
         }
+
+
         loginTeacherList = new ArrayList<LoginTeacher>();
         final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference("TeacherForm");
@@ -68,9 +70,13 @@ public class TeacherLoginForm extends AppCompatActivity {
                     LoginTeacher loginTeacher1 = dataSnapshot1.getValue(LoginTeacher.class);
                     loginTeacherList.add(loginTeacher1);
                 }
-                for (int i = 0;i < loginTeacherList.size();i++){
+                for (int i = 0;i < loginTeacherList.size();++i){
+
                     if(username.equals(loginTeacherList.get(i).teacherName)
                             && password.equals(loginTeacherList.get(i).teacherPassword)){
+                        for (int ie = 1; ie <= 10; ++ie) {
+                            TeacherGetSetData.getnumber.add(String.valueOf(ie));
+                        }
                         TeacherGetSetData.teacherName =loginTeacherList.get(i).teacherName;
                         Intent intent = new Intent(getApplicationContext(), TeacherBottomNavigation.class);
                         startActivity(intent);
