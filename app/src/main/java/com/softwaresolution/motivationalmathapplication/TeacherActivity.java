@@ -45,7 +45,6 @@ public class TeacherActivity extends Fragment implements View.OnClickListener{
         editText_answer = (EditText) v.findViewById(R.id.edittxt_correct);
         button_next = (Button) v.findViewById(R.id.button_next);
         button_next.setOnClickListener(this);
-        textView_quizno.setText("Quiz No "+String.valueOf(retrieveNo));
         return  v;
     }
 
@@ -56,7 +55,7 @@ public class TeacherActivity extends Fragment implements View.OnClickListener{
         }
     }
     quizData qData;
-    SetQuiz setQuiz;
+    QuizList setQuiz;
     private void GetQuizNumber(){
         //GetQuizNumber]
         databaseReferenceQuiz = FirebaseDatabase.getInstance().getReference("TeacherForm").child("qw").child("QuizNumber");
@@ -66,6 +65,7 @@ public class TeacherActivity extends Fragment implements View.OnClickListener{
                 try{
                     QuizNumber getQuiz = dataSnapshot.getValue(QuizNumber.class);
                     retrieveNo = getQuiz.getQuizNumber();
+                    textView_quizno.setText("Quiz No "+getQuiz.getQuizNumber());
                 }catch (Exception ex){
                     Toast.makeText(getContext(),ex.getMessage(),Toast.LENGTH_LONG).show();
                 }
@@ -80,7 +80,7 @@ public class TeacherActivity extends Fragment implements View.OnClickListener{
     String retrieveNo;
     private  void SetQuizNumber(String setNumber){
         try{
-            setQuiz = new SetQuiz(setNumber);
+            setQuiz = new QuizList(setNumber);
             databaseReferenceQuiz.setValue(setQuiz);
             Toast.makeText(getContext(),"Saved",Toast.LENGTH_LONG).show();
         }catch (Exception ex){

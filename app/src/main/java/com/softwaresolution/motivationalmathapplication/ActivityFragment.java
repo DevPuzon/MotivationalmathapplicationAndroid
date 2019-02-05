@@ -11,8 +11,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,78 +33,91 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ActivityFragment extends Fragment implements View.OnClickListener{
+public class ActivityFragment extends Fragment{
     View v;
-    private Button bttn_register;
-    private EditText editxt_username,editxt_password;
-    private TextView textview_signup;
-    private ProgressDialog progressDialog;
+    private ListView listView_quizList;
+
+    List<String> quizLists;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_activity, container, false);
-        progressDialog = new ProgressDialog(getActivity());
-        bttn_register = (Button) v.findViewById(R.id.bttn_Register);
-        editxt_username = (EditText) v.findViewById(R.id.editxt_username);
-        editxt_password = (EditText) v.findViewById(R.id.editxt_password);
-        textview_signup = (TextView) v.findViewById(R.id.textview_signup);
-
-        bttn_register.setOnClickListener(this);
-        textview_signup.setOnClickListener(this);
+        listView_quizList = (ListView) v.findViewById(R.id.listView_quizList);
+        quizLists = new ArrayList<>();
+        listView_quizList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                int trueIndex = i + 1;
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new QuizActivity()).commit();
+            }
+        });
         return v;
     }
-
-    List<LoginTeacher> loginTeachers;
-    private void userRegister(){
-         final String username = editxt_username.getText().toString();
-         final String password = editxt_password.getText().toString();
-
-//        if(TextUtils.isEmpty(username)){
-//            Toast.makeText(getContext(),"Please enter you username", Toast.LENGTH_LONG).show();
-//            return;
-//        }
-//        if(TextUtils.isEmpty(password)){
-//            Toast.makeText(getContext(),"Please enter you password", Toast.LENGTH_LONG).show();
-//            return;
-//        }
-
-        loginTeachers = new ArrayList<LoginTeacher>();
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference databaseReference = database.getReference("TeacherForm");
-        databaseReference.addValueEventListener(new ValueEventListener() {
+    @Override
+    public void onStart() {
+        super.onStart();
+        DatabaseReference databaseReferenceQuiz = FirebaseDatabase.getInstance().getReference("TeacherForm").child("qw").child("QuizNumber");
+        databaseReferenceQuiz.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                loginTeachers.clear();
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
-                    LoginTeacher loginTeacher1 = dataSnapshot1.getValue(LoginTeacher.class);
-                    loginTeachers.add(loginTeacher1);
-                }
-                for (int i = 0;i < loginTeachers.size();i++){
-                    if(username.equals(loginTeachers.get(i).teacherName)
-                            && password.equals(loginTeachers.get(i).teacherPassword)){
-                        Toast.makeText(getContext(),"Success",Toast.LENGTH_LONG).show();
-                        return;
+                try{
+                    QuizNumber getQuiz = dataSnapshot.getValue(QuizNumber.class);
+                    for (int i = 1; i <= Integer.parseInt(getQuiz.getQuizNumber()); ++i){
+                        quizLists.add("Quiz No " + String.valueOf(i));
                     }
+                }catch (Exception ex){
+                    Toast.makeText(getContext(),ex.getMessage(),Toast.LENGTH_LONG).show();
                 }
-                Toast.makeText(getContext(),"Failed",Toast.LENGTH_LONG).show();
+                QuizListLayout quizListLayout = new QuizListLayout(getActivity(),quizLists);
+                listView_quizList.setAdapter(quizListLayout);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(getContext(),"Database error",Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(),"Error",Toast.LENGTH_LONG).show();
             }
         });
+//        DatabaseReference dbQuizList = FirebaseDatabase.getInstance().getReference("TeacherForm").child("qw").child("Quiz");
+//        dbQuizList.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+////                quizLists.clear();
+//                try {
+//                    for (DataSnapshot dsQuizList : dataSnapshot.getChildren()){
+//                        QuizList quizList = dsQuizList.getValue(QuizList.class);
+////                        quizLists.add(quizList);
+//                    }
+//                }catch (Exception ex){
+//                    Toast.makeText(getContext(),ex.getMessage(),Toast.LENGTH_LONG).show();
+//                }
+////                QuizListLayout quizListLayout = new QuizListLayout(getActivity(),quizLists);
+////                listView_quizList.setAdapter(quizListLayout);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//                Toast.makeText(getContext(),"Database Error",Toast.LENGTH_LONG).show();
+//            }
+//        });
     }
 
+    private void getQuizNumber(){
+        DatabaseReference databaseReferenceQuiz = FirebaseDatabase.getInstance().getReference("TeacherForm").child("qw").child("QuizNumber");
+        databaseReferenceQuiz.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                try{
+                    QuizNumber getQuiz = dataSnapshot.getValue(QuizNumber.class);
+                }catch (Exception ex){
+                    Toast.makeText(getContext(),ex.getMessage(),Toast.LENGTH_LONG).show();
+                }
+            }
 
-    @Override
-    public void onClick(View view) {
-        if (view == bttn_register){
-            //userRegister();
-            Toast.makeText(getContext(),"Database error",Toast.LENGTH_LONG).show();
-        }
-        if(view == textview_signup){
-
-        }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(getContext(),"Error",Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }
