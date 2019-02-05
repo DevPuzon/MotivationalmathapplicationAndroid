@@ -36,7 +36,7 @@ import java.util.List;
 public class ActivityFragment extends Fragment{
     View v;
     private ListView listView_quizList;
-
+    public static String  QUIZ_NUMBER ;
     List<String> quizLists;
     @Nullable
     @Override
@@ -47,9 +47,13 @@ public class ActivityFragment extends Fragment{
         listView_quizList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                quizLists.get(i);
+                QUIZ_NUMBER = quizLists.get(i);
 //                int trueIndex = i + 1;
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new QuizActivity()).commit();
+
+
             }
         });
         return v;

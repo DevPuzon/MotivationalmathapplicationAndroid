@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,14 +24,14 @@ import java.util.List;
 public class TeacherLoginForm extends AppCompatActivity {
     private EditText editText_TeacherUsername, editText_TeacherPassword;
     private Button button_TeacherLogin;
-    private TextView textView_teacherSignup;
+    private LinearLayout linearLayout_teacherSignup;
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.teacher_form);
         button_TeacherLogin = (Button) findViewById(R.id.button_TeacherLogin);
         editText_TeacherUsername = (EditText) findViewById(R.id.edittext_TeacherUsername);
         editText_TeacherPassword = (EditText) findViewById(R.id.edittext_TeacherPassword);
-        textView_teacherSignup = (TextView) findViewById(R.id.textview_teacherSignup);
+        linearLayout_teacherSignup = (LinearLayout) findViewById(R.id.linearlayout_teacherSignup);
 
         button_TeacherLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,7 +39,7 @@ public class TeacherLoginForm extends AppCompatActivity {
                 authTeacher();
             }
         });
-        textView_teacherSignup.setOnClickListener(new View.OnClickListener() {
+        linearLayout_teacherSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showTeacherReg();

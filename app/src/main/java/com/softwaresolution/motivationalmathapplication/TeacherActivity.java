@@ -104,9 +104,6 @@ public class TeacherActivity extends Fragment implements View.OnClickListener{
             Toast.makeText(getContext(),"Please fill the all the data information", Toast.LENGTH_LONG).show();
             return;
         }
-
-
-
         try{
 
             qData = new quizData(question,choice_a,
@@ -114,7 +111,7 @@ public class TeacherActivity extends Fragment implements View.OnClickListener{
             databaseReference.child(getNumber).setValue(qData);
             Toast.makeText(getContext(),"Saved",Toast.LENGTH_LONG).show();
             TeacherGetSetData.getnumber.remove(0);
-            if(Integer.parseInt(getNumber) == 3) {
+            if(Integer.parseInt(getNumber) == 10) {
                 //another Data
                 SetQuizNumber(String.valueOf(Integer.parseInt(retrieveNo) + 1));
                 TeacherGetSetData.getnumber.clear();

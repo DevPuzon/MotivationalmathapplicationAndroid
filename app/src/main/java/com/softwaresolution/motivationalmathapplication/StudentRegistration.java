@@ -13,13 +13,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class StudentRegistration extends AppCompatActivity {
-    private EditText editText_StudentUsernameReg, editText_StudentPasswordReg;
+    private EditText editText_StudentUsernameReg, editText_StudentPasswordReg,edittext_StudentTeacherName;
     private Button button_StudentRegister;
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.student_registration);
         editText_StudentUsernameReg = (EditText) findViewById(R.id.edittext_StudentUsernameReg);
         editText_StudentPasswordReg = (EditText) findViewById(R.id.edittext_StudentPasswordReg);
+        edittext_StudentTeacherName = (EditText) findViewById(R.id.edittext_StudentTeacherName);
         button_StudentRegister = (Button) findViewById(R.id.button_StudentRegister);
         button_StudentRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,6 +36,7 @@ public class StudentRegistration extends AppCompatActivity {
 
         String studentName = editText_StudentUsernameReg.getText().toString().trim();
         String studentPassword = editText_StudentPasswordReg.getText().toString().trim();
+        String studentTeacherName = editText_StudentPasswordReg.getText().toString().trim();
         if(TextUtils.isEmpty(studentName)){
             Toast.makeText(this,"Please enter your username", Toast.LENGTH_LONG).show();
             return;
@@ -43,9 +45,13 @@ public class StudentRegistration extends AppCompatActivity {
             Toast.makeText(this,"Please enter your password", Toast.LENGTH_LONG).show();
             return;
         }
+        if(TextUtils.isEmpty(studentTeacherName)){
+            Toast.makeText(this,"Please enter your teacher name assigned", Toast.LENGTH_LONG).show();
+            return;
+        }
 
         try {
-            LoginStudent studentData = new LoginStudent(studentName,studentPassword);
+            LoginStudent studentData = new LoginStudent(studentName,studentPassword,studentTeacherName);
             databaseReference.child(studentName).setValue(studentData);
             Toast.makeText(this,"Saved",Toast.LENGTH_LONG).show();
         }catch (Exception ex){

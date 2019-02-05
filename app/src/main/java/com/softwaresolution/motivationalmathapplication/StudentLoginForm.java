@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,16 +24,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StudentLoginForm extends AppCompatActivity {
+    public static String STUDENT_NAME;
+    public static String TEACHER_ASSIGNED;
     private EditText editText_StudentUsername, editText_StudentPassword;
     private Button button_StudentLogin;
-    private TextView textView_studentReg;
+    private LinearLayout linearLayout_studentReg;
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.student_form);
         button_StudentLogin = (Button) findViewById(R.id.button_StudentLogin);
         editText_StudentUsername = (EditText) findViewById(R.id.edittext_StudentUsername);
         editText_StudentPassword = (EditText) findViewById(R.id.edittext_StudentPassword);
-        textView_studentReg = (TextView) findViewById(R.id.textview_studentSignup);
+        linearLayout_studentReg = (LinearLayout) findViewById(R.id.linearlayout_studentSignup);
 
         button_StudentLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,7 +43,7 @@ public class StudentLoginForm extends AppCompatActivity {
                 showMainActivity();
             }
         });
-        textView_studentReg.setOnClickListener(new View.OnClickListener() {
+        linearLayout_studentReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showStudentReg();
@@ -73,6 +76,8 @@ public class StudentLoginForm extends AppCompatActivity {
                 for (int i = 0;i < loginStudents.size();i++){
                     if(username.equals(loginStudents.get(i).studentName)
                             && password.equals(loginStudents.get(i).studentPassword)){
+                        STUDENT_NAME = loginStudents.get(i).studentName;
+                        TEACHER_ASSIGNED = loginStudents.get(i).studentTeacherAssigned;
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(intent);
                         return;

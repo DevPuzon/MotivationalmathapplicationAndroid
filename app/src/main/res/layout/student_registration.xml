@@ -23,6 +23,11 @@
             android:id="@+id/edittext_StudentPasswordReg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+        <EditText
+            android:hint="Teacher Name Assigned"
+            android:id="@+id/edittext_StudentTeacherName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
         <Button
             android:text="Register"
             android:id="@+id/button_StudentRegister"

@@ -8,6 +8,9 @@ public class quizData {
     String quizChoice_d;
     String quizCorrectAnswer;
 
+    public quizData(){
+
+    }
     public quizData(String quizQuestion, String quizChoice_a, String quizChoice_b, String quizChoice_c, String quizChoice_d, String quizCorrectAnswer) {
         this.quizQuestion = quizQuestion;
         this.quizChoice_a = quizChoice_a;
