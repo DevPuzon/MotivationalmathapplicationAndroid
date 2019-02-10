@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 public class FrontForm extends AppCompatActivity {
@@ -27,6 +29,10 @@ public class FrontForm extends AppCompatActivity {
                 showStudentLoginForm();
             }
         });
+        Animation animation1 = AnimationUtils.loadAnimation(this,R.anim.blink_anim);
+        button_teacher.startAnimation(animation1);
+        Animation animation2 = AnimationUtils.loadAnimation(this,R.anim.sample_anim);
+        button_student.startAnimation(animation2);
     }
 
     private void showTeacherLoginForm(){

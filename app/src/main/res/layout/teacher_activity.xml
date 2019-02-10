@@ -11,7 +11,7 @@
         <TextView
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
             android:id="@+id/textview_quizno"
-            android:text="Quiz no."
+            android:text="Activity No : "
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <EditText

@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -50,10 +52,10 @@ public class ActivityFragment extends Fragment{
 //                quizLists.get(i);
                 QUIZ_NUMBER = quizLists.get(i);
 //                int trueIndex = i + 1;
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+
+                getActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fadein,R.anim.fadeout)
+                        .replace(R.id.fragment_container,
                         new QuizActivity()).commit();
-
-
             }
         });
         return v;
@@ -68,7 +70,7 @@ public class ActivityFragment extends Fragment{
                 try{
                     QuizNumber getQuiz = dataSnapshot.getValue(QuizNumber.class);
                     for (int i = 1; i <= Integer.parseInt(getQuiz.getQuizNumber()); ++i){
-                        quizLists.add("Quiz No " + String.valueOf(i));
+                        quizLists.add("Activity No"+" " + String.valueOf(i));
                     }
                 }catch (Exception ex){
                     Toast.makeText(getContext(),ex.getMessage(),Toast.LENGTH_LONG).show();
